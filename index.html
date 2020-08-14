@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="OreOPS Framework Pvt Ltd" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>SATHISH TRADE ALERTS</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>    
+    <script>
+      $(document).ready(function()
+      {       
+        const url = "https://maker.ifttt.com/trigger/trade_alert/with/key/ciwH_bjei1OucidSpCt2rd"; 
+        var data = JSON.parse('[{"sr":1,"nsecode":"MRF","name":"Mrf Limited","bsecode":"500290","per_chg":3.8,"close":63976.5,"volume":29508},{"sr":2,"nsecode":"ALKEM","name":"Alkem Laboratories Limited","bsecode":"539523","per_chg":4.37,"close":2909.7,"volume":372603},{"sr":3,"nsecode":"ALKYLAMINE","name":"Alkyl Amines Chemicals Limited","bsecode":"506767","per_chg":5.42,"close":2824.75,"volume":95092},{"sr":4,"nsecode":"HEROMOTOCO","name":"Hero Motocorp Limited","bsecode":"500182","per_chg":1.29,"close":2809.65,"volume":1299064},{"sr":5,"nsecode":"CERA","name":"Cera Sanitaryware Limited","bsecode":"532443","per_chg":0.84,"close":2375,"volume":3152}]');
+        AJAXCALL(url, {"value1": "TOTAL SCRIPTS TODAY: " + data.length, "value2": "","value3": "" });
+        data.forEach(value => {
+          const no = value.sr;         
+          const bsecode = value.bsecode;
+          const close = value.close;
+          const name = value.name;
+          const nsecode = value.nsecode;
+          const per_chg = value.per_chg + "%";
+          const volume = value.volume;
+          const chartink = "https://chartink.com/stocks/"+ nsecode +".html";    
+          const screener = "https://www.screener.in/company/"+ nsecode +"/consolidated/"      
+          const scriptdata = "NO: " + no + "<br>NSECODE: " + nsecode + "<br>NAME: " + name + "<br>CLOSE: " +close + "<br>CHANGE: " + per_chg + "<br>VOLUME: " + volume + "<br>CHARTINK: " + chartink + "<br>SCREENER: " + screener +"";
+          const param = {"value1": scriptdata,"value2": "","value3": "" }  
+          AJAXCALL(url,param);                          
+        });        
+      });
+
+      function AJAXCALL(url, param) {
+        $.ajax({
+          type: "post",
+          url: url,
+          dataType:"json",
+          data: param,
+          async: false,
+          success: function (response) {
+              console.log(response);
+              if(response.status === "success") {
+                  // do something with response.message or whatever other data on success
+              } else if(response.status === "error") {
+                  // do something with response.message or whatever other data on error
+              }
+          }
+        })       
+      }       
+	  </script>        
+
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- <iframe id="chartink" src="https://chartink.com/screener/15-minute-stock-breakouts" style="width:100%;height:500px;" frameborder="0">
+    </iframe> -->
+    <div id="root">
+      <h1>STATUS</h1>
+      <h1 id="message"></h1>
+    </div>
+    <div id="modal"></div>
+    
+</body>
+</html>
